@@ -1,4 +1,4 @@
-FROM php:8.1-fpm
+FROM php:8.0-fpm
 
 RUN apt update && apt install -y \
       apt-utils \
@@ -11,6 +11,8 @@ RUN apt update && apt install -y \
       docker-php-ext-install bcmath && \
       docker-php-ext-install gd && \
       docker-php-ext-install zip && \
+      pecl install xdebug && \
+      docker-php-ext-enable xdebug && \
       apt-get clean && \
       rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
