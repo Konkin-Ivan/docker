@@ -1,0 +1,25 @@
+{
+  "name": "konkin/base_php_app",
+  "authors": [
+    {
+      "name": "Konkin Ivan",
+      "email": "konkin.ivan@yandex.ru"
+    }
+  ],
+  "require": {
+  },
+  "autoload": {
+    "psr-4": {
+      "App\\": "./"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Tests\\": "tests"
+    }
+  },
+  "require-dev": {
+    "symfony/var-dumper": "^6.3",
+    "phpunit/phpunit": "^10.3"
+  }
+}
