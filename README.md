@@ -1,5 +1,5 @@
 # Docker для PHP разработки
-## Подходит для Laravel, Yii2, Codeigniter, Symfony, чистый PHP.
+## Подходит для Laravel, Codeigniter, Symfony, чистый PHP.
 ### При использовании фреймворка, очистить директорию "web".
 
 Докер настроен с учетом модуля Xdebug.
