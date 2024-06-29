@@ -1,0 +1,11 @@
+version: '3.x'
+
+services:
+  golang:
+    build:
+      context: .
+      dockerfile: images/go/Dockerfile
+    volumes:
+      - ./:/app
+    entrypoint: [ "tail", "-f", "/dev/null" ]
+    container_name: "${PROJECT_NAME}_go"
