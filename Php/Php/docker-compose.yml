@@ -1,5 +1,3 @@
-version: '3'
-
 services:
 
   nginx:
@@ -7,7 +5,7 @@ services:
     container_name: "${PROJECT_NAME}_nginx"
     volumes:
      - ./:/var/www/html/
-     - ./_docker/conf.d:/etc/nginx/conf.d/
+     - ./_docker/nginx:/etc/nginx/conf.d/
     ports:
      - "80:80"
 #    depends_on:
@@ -19,7 +17,7 @@ services:
   php:
     build:
       context: .
-      dockerfile: _docker/app/Dockerfile
+      dockerfile: _docker/php/Dockerfile
     volumes:
      - ./:/var/www/html/
     container_name: "${PROJECT_NAME}_php"
