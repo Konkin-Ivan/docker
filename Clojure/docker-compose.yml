@@ -9,34 +9,34 @@ services:
      - "80:80"
     depends_on:
       - app
-
   app:
     build:
       context: .
       dockerfile: _docker/app/Dockerfile
-    container_name: "${PROJECT_NAME}_app"  # Имя контейнера
+    container_name: "${PROJECT_NAME}_app" # Имя контейнера
     volumes:
-      - ./web:/usr/src/web/  # Монтирование текущей директории
+      - ./web:/usr/src/web/ # Монтирование текущей директории
+      - ./logs:/app/logs
     ports:
-      - 5555:5555  # Проброс порта REPL
-      - 3000:3000  # Проброс порта для веб-приложения (если нужно)
+      - 5555:5555 # Проброс порта REPL
+      - 3000:3000 # Проброс порта для веб-приложения (если нужно)
+    command: >
+      sh -c "clojure -J-Dclojure.server.repl='{:port 5555 :accept clojure.core.server/repl}' & tail -f /dev/null"
     environment:
-      - LEIN_REPL_HOST=0.0.0.0  # Разрешить подключение к REPL извне
-      - LEIN_REPL_PORT=5555  # Порт для REPL
+      - LEIN_REPL_HOST=0.0.0.0 # Разрешить подключение к REPL извне
+      - LEIN_REPL_PORT=5555 # Порт для REPL
     depends_on:
-      - db  # Зависимость от сервиса db
-
+      - db # Зависимость от сервиса db
   db:
-    image: $POSTGRES_TAG  # Используем переменную для указания версии PostgreSQL
-    container_name: "${PROJECT_NAME}_postgres"  # Имя контейнера
+    image: $POSTGRES_TAG # Используем переменную для указания версии PostgreSQL
+    container_name: "${PROJECT_NAME}_postgres" # Имя контейнера
     volumes:
-      - ./database:/var/lib/postgresql/data  # Том для хранения данных PostgreSQL
+      - ./database:/var/lib/postgresql/data # Том для хранения данных PostgreSQL
     environment:
-      POSTGRES_USER: $DB_USER  # Пользователь базы данных
-      POSTGRES_PASSWORD: $DB_PASSWORD  # Пароль пользователя
-      POSTGRES_DB: $DB_NAME  # Имя базы данных
-      POSTGRES_ROOT_PASSWORD: $DB_ROOT_PASSWORD  # Пароль суперпользователя (опционально)
+      POSTGRES_USER: $DB_USER # Пользователь базы данных
+      POSTGRES_PASSWORD: $DB_PASSWORD # Пароль пользователя
+      POSTGRES_DB: $DB_NAME # Имя базы данных
+      POSTGRES_ROOT_PASSWORD: $DB_ROOT_PASSWORD # Пароль суперпользователя (опционально)
     ports:
-      - 8101:5432  # Проброс порта (5432 — стандартный порт PostgreSQL)
-    command: postgres -c 'client_encoding=UTF8'  # Установка кодировки UTF-8
- 
+      - 8101:5432 # Проброс порта (5432 — стандартный порт PostgreSQL)
+    command: postgres -c 'client_encoding=UTF8' # Установка кодировки UTF-8
